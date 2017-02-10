@@ -35,3 +35,5 @@ HEADERS  += airqualitywidget.h \
     datasource.h
 
 CONFIG += c++11
+
+LIBS += -lwiringPi
