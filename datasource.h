@@ -22,9 +22,12 @@ public:
 signals:
     void valueChanged (DataType type, float value) const;
 
-public:
+private:
     DataSource (QObject *parent = nullptr);
     ~DataSource ();
+
+    class Private;
+    Private *p;
 };
 
 #endif // DATASOURCE_H
