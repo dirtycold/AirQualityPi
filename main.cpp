@@ -1,13 +1,11 @@
-#include "airqualitywidget.h"
+#include "airqualitypiwidget.h"
 #include <QApplication>
-
-#include <QDebug>
 #include "datasource.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    AirQualityWidget w;
+    AirQualityPiWidget w;
     w.show();
 
     return a.exec();
