@@ -103,7 +103,6 @@ class DataSource::Private
         {
             airQuality = newValue;
             emit parent->valueChanged(DataSource::AirQuality, airQuality);
-            qDebug () << "air quality:" << airQuality;
         }
 
         // qDebug () << ".";
