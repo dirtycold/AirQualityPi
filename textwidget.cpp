@@ -3,10 +3,15 @@
 
 #include <QLabel>
 #include <QFormLayout>
+#include <QFont>
 
 TextWidget::TextWidget(QWidget *parent) : QWidget(parent)
 {
     QFormLayout *layout = new QFormLayout(this);
+
+    QFont defaultFont = font();
+    defaultFont.setPointSize(defaultFont.pointSize() * 2);
+    setFont(defaultFont);
 
     QLabel *temperatureTextLabel = new QLabel ("Temperature", this);
     QLabel *temperatureValueLabel = new QLabel (this);
