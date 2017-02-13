@@ -32,6 +32,9 @@ TextWidget::TextWidget(QWidget *parent) : QWidget(parent)
         case DataSource::Humidity:
             humidityValueLabel->setText(QString::number(value));
             break;
+        case DataSource::AirQuality:
+            airQualityValueLabel->setText(QString::number(value));
+            break;
         default:
             break;
         }
