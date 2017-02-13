@@ -1,10 +1,10 @@
-#include "temperaturewidget.h"
+#include "textwidget.h"
 #include "datasource.h"
 
 #include <QLabel>
 #include <QFormLayout>
 
-TemperatureWidget::TemperatureWidget(QWidget *parent) : QWidget(parent)
+TextWidget::TextWidget(QWidget *parent) : QWidget(parent)
 {
     QFormLayout *layout = new QFormLayout(this);
 
@@ -14,8 +14,12 @@ TemperatureWidget::TemperatureWidget(QWidget *parent) : QWidget(parent)
     QLabel *humidityTextLabel = new QLabel ("Humidity", this);
     QLabel *humidityValueLabel = new QLabel (this);
 
+    QLabel *airQualityTextLabel = new QLabel ("Air Quality", this);
+    QLabel *airQualityValueLabel = new QLabel (this);
+
     layout->addRow(temperatureTextLabel, temperatureValueLabel);
     layout->addRow(humidityTextLabel, humidityValueLabel);
+    layout->addRow(airQualityTextLabel, airQualityValueLabel);
 
     DataSource &dataSource = DataSource::instance();
 

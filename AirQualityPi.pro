@@ -24,14 +24,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-    temperaturewidget.cpp \
     airqualitypiwidget.cpp \
     datasource.cpp \
+    textwidget.cpp \
 
-    temperaturewidget.h \
 HEADERS  += \
     airqualitypiwidget.h \
     datasource.h \
+    textwidget.h \
 
 CONFIG += c++11
 

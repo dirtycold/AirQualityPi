@@ -1,12 +1,12 @@
 #include "airqualitypiwidget.h"
-#include "temperaturewidget.h"
+#include "textwidget.h"
 
 #include <QVBoxLayout>
 
 AirQualityPiWidget::AirQualityPiWidget(QWidget *parent) : QWidget(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout (this);
-    TemperatureWidget *temperatureWidget = new TemperatureWidget (this);
+    TextWidget *temperatureWidget = new TextWidget (this);
 
     layout->addWidget(temperatureWidget);
 }
