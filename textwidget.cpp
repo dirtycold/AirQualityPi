@@ -5,6 +5,11 @@
 #include <QFormLayout>
 #include <QFont>
 
+#include <QString>
+#include <QFile>
+#include <QDateTime>
+#include <QTextStream>
+
 TextWidget::TextWidget(QWidget *parent) : QWidget(parent)
 {
     QFormLayout *layout = new QFormLayout(this);
@@ -39,6 +44,18 @@ TextWidget::TextWidget(QWidget *parent) : QWidget(parent)
             break;
         case DataSource::AirQuality:
             airQualityValueLabel->setText(QString::number(value));
+
+            {
+                QFile file ("airQualityPi.log");
+                file.open(QIODevice::WriteOnly | QIODevice::Append);
+                QTextStream s (&file);
+                s << QTime::currentTime().toString()
+                  << " "
+                  << QString::number(value)
+                  << endl;
+                file.close();
+            }
+
             break;
         default:
             break;
