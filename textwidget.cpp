@@ -49,7 +49,7 @@ TextWidget::TextWidget(QWidget *parent) : QWidget(parent)
                 QFile file ("airQualityPi.log");
                 file.open(QIODevice::WriteOnly | QIODevice::Append);
                 QTextStream s (&file);
-                s << QTime::currentTime().toString()
+                s << QDateTime::currentDateTime().toString(Qt::ISODate)
                   << " "
                   << QString::number(value)
                   << endl;
