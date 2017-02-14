@@ -8,6 +8,7 @@
 #include "ads1115.h"
 
 #include <QTimer>
+#include <QtMath>
 #include <QDebug>
 
 static const int htu21d_i2c_addr {0x40};
@@ -60,9 +61,10 @@ class DataSource::Private
         float rawValueFloat;
         float newValue;
 
-        auto isFuzzyEqual = [](float a, float b, float PREC = 1e-2)
+        auto isFuzzyEqual = [](float a, float b, float precision = 1e-2)
         {
-            return abs (a - b) < abs (PREC);
+            bool equal = (qAbs (a - b) < qAbs (precision));
+            return equal;
         };
 
         wiringPiI2CWrite(fd, htu21d_temp_id);
