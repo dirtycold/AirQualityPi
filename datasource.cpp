@@ -57,6 +57,17 @@ class DataSource::Private
         }
 
         ads1115Setup(ads1115_base_addr, ads1115_i2c_addr);
+
+        QTimer *timer = new QTimer;
+        timer->setInterval(500);
+        timer->setSingleShot(false);
+
+        parent->connect(timer, &QTimer::timeout, [this] () {
+            // refresh
+            refreshValues();
+        });
+
+        timer->start();
     }
 
     void refreshValues ()
@@ -161,18 +172,7 @@ DataSource::DataSource(QObject *parent)
     : QObject (parent),
       p (new DataSource::Private (this))
 {
-    QTimer *timer = new QTimer;
-    timer->setInterval(500);
-    timer->setSingleShot(false);
-
     p->initSensors();
-
-    connect(timer, &QTimer::timeout, [this] () {
-        // refresh
-        p->refreshValues();
-    });
-
-    timer->start();
 }
 
 DataSource::~DataSource()
