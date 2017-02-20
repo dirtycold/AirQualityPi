@@ -32,13 +32,13 @@ TextWidget::TextWidget(QWidget *parent) : QWidget(parent)
         switch (type)
         {
         case DataSource::Temperature:
-            temperatureValueLabel->setText(QString::number(value));
+            temperatureValueLabel->setText(QString::number(value, 'f', 1));
             break;
         case DataSource::Humidity:
-            humidityValueLabel->setText(QString::number(value));
+            humidityValueLabel->setText(QString::number(value, 'f', 1));
             break;
         case DataSource::AirQuality:
-            airQualityValueLabel->setText(QString::number(value));
+            airQualityValueLabel->setText(QString::number(value, 'f', 1));
             break;
         default:
             break;
