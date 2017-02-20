@@ -4,17 +4,11 @@
 
 #include "wiringPi.h"
 #include "wiringPiI2C.h"
-
 #include "ads1115.h"
 
 #include <QTimer>
 #include <QtMath>
 #include <QDebug>
-
-#include <QString>
-#include <QFile>
-#include <QDateTime>
-#include <QTextStream>
 
 static const int htu21d_i2c_addr {0x40};
 static const int htu21d_temp_id  {0xF3};
@@ -120,21 +114,6 @@ class DataSource::Private
         emit parent->valueUpdated();
 
         // qDebug () << ".";
-
-        {
-            QFile file ("airQualityPi.log");
-            file.open(QIODevice::WriteOnly | QIODevice::Append);
-            QTextStream s (&file);
-            s << QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss.zzz")
-              << " "
-              << QString::number(temperature)
-              << " "
-              << QString::number(humidity)
-              << " "
-              << QString::number(airQuality)
-              << endl;
-            file.close();
-        }
     }
 };
 

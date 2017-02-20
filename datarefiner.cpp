@@ -56,6 +56,21 @@ class DataRefiner::Private
         setValue (&temperature, DataSource::Temperature, source->temperature());
         setValue (&humidity, DataSource::Humidity, source->humidity());
         setValue (&airQuality, DataSource::AirQuality, source->airQuality());
+
+        {
+            QFile file ("airQualityPi.log");
+            file.open(QIODevice::WriteOnly | QIODevice::Append);
+            QTextStream s (&file);
+            s << QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss.zzz")
+              << " "
+              << QString::number(temperature)
+              << " "
+              << QString::number(humidity)
+              << " "
+              << QString::number(airQuality)
+              << endl;
+            file.close();
+        }
     }
 };
 
