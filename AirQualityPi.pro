@@ -27,13 +27,15 @@ SOURCES += main.cpp\
     airqualitypiwidget.cpp \
     datasource.cpp \
     textwidget.cpp \
-    plotwidget.cpp
+    plotwidget.cpp \
+    datarefiner.cpp
 
 HEADERS  += \
     airqualitypiwidget.h \
     datasource.h \
     textwidget.h \
-    plotwidget.h
+    plotwidget.h \
+    datarefiner.h
 
 CONFIG += c++11
 
