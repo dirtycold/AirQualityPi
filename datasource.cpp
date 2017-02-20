@@ -77,12 +77,6 @@ class DataSource::Private
         float rawValueFloat;
         float newValue;
 
-        auto isFuzzyEqual = [](float a, float b, float precision = 1e-2)
-        {
-            bool equal = (qAbs (a - b) < qAbs (precision));
-            return equal;
-        };
-
         wiringPiI2CWrite(fd, htu21d_temp_id);
         delay(htu21d_delay);
         read(fd, buf, 3);
@@ -162,6 +156,11 @@ float DataSource::airQuality() const
 {
     return p->airQuality;
 }
+
+bool DataSource::isFuzzyEqual(float a, float b, float precision)
+{
+    bool equal = (qAbs (a - b) < qAbs (precision));
+    return equal;
 }
 
 DataSource::DataSource(QObject *parent)

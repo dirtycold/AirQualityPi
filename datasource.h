@@ -21,6 +21,8 @@ public:
     float humidity () const;
     float airQuality () const;
 
+    static bool isFuzzyEqual (float a, float b, float precision = 1e-2);
+
 signals:
     void valueChanged (DataType type, float value) const;
 
