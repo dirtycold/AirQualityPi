@@ -25,6 +25,7 @@ public:
 
 signals:
     void valueChanged (DataType type, float value) const;
+    void valueUpdated () const;
 
 private:
     DataSource (QObject *parent = nullptr);
