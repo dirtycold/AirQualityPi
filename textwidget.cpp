@@ -1,5 +1,5 @@
 #include "textwidget.h"
-#include "datasource.h"
+#include "datarefiner.h"
 
 #include <QLabel>
 #include <QFormLayout>
@@ -26,9 +26,9 @@ TextWidget::TextWidget(QWidget *parent) : QWidget(parent)
     layout->addRow(humidityTextLabel, humidityValueLabel);
     layout->addRow(airQualityTextLabel, airQualityValueLabel);
 
-    DataSource &dataSource = DataSource::instance();
+    DataRefiner &dataRefiner = DataRefiner::instance();
 
-    connect(&dataSource, &DataSource::valueChanged, [=] (DataSource::DataType type, float value) {
+    connect(&dataRefiner, &DataRefiner::valueChanged, [=] (DataSource::DataType type, float value) {
         switch (type)
         {
         case DataSource::Temperature:
