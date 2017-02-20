@@ -31,6 +31,7 @@ class DataRefiner::Private
         {
             static const float A {0.9};
             static const float B {1 - A};
+            static const float PREC {0.1};
 
             if (valuePtr == nullptr)
             {
@@ -45,7 +46,7 @@ class DataRefiner::Private
             else
             {
                 float updatedValue = *valuePtr * A + newValue * B;
-                if (! DataSource::isFuzzyEqual(*valuePtr, updatedValue))
+                if (! DataSource::isFuzzyEqual(*valuePtr, updatedValue, PREC))
                 {
                     *valuePtr = updatedValue;
                     emit parent->valueChanged(type, *valuePtr);
