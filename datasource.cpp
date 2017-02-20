@@ -18,6 +18,8 @@ static const int htu21d_delay    {50};
 static const int ads1115_base_addr {100};
 static const int ads1115_i2c_addr  {0x48};
 
+static const int refreshInterval {1000};
+
 class DataSource::Private
 {
     friend class DataSource;
@@ -53,7 +55,7 @@ class DataSource::Private
         ads1115Setup(ads1115_base_addr, ads1115_i2c_addr);
 
         QTimer *timer = new QTimer;
-        timer->setInterval(500);
+        timer->setInterval(refreshInterval);
         timer->setSingleShot(false);
 
         parent->connect(timer, &QTimer::timeout, [this] () {
