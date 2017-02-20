@@ -148,24 +148,20 @@ DataSource &DataSource::instance()
     return source;
 }
 
-float DataSource::value(DataSource::DataType type) const
+float DataSource::temperature() const
 {
-    float value (NAN);
-    switch (type)
-    {
-    case Temperature:
-        value = p->temperature;
-        break;
-    case Humidity:
-        value = p->humidity;
-        break;
-    case AirQuality:
-        value = p->airQuality;
-        break;
-    default:
-        break;
-    }
-    return value;
+    return p->temperature;
+}
+
+float DataSource::humidity() const
+{
+    return p->humidity;
+}
+
+float DataSource::airQuality() const
+{
+    return p->airQuality;
+}
 }
 
 DataSource::DataSource(QObject *parent)

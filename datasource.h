@@ -17,7 +17,9 @@ public:
         AirQuality,
     };
 
-    float value (DataType type) const;
+    float temperature () const;
+    float humidity () const;
+    float airQuality () const;
 
 signals:
     void valueChanged (DataType type, float value) const;
