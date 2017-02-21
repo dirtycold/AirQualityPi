@@ -13,7 +13,7 @@
 static const int htu21d_i2c_addr {0x40};
 static const int htu21d_temp_id  {0xF3};
 static const int htu21d_hum_id   {0xF5};
-static const int htu21d_delay    {50};
+static const int htu21d_delay    {100};
 
 static const int ads1115_base_addr {100};
 static const int ads1115_i2c_addr  {0x48};
