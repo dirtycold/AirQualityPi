@@ -10,13 +10,13 @@
 #include <QtMath>
 #include <QDebug>
 
-static const int htu21d_i2c_addr {0x40};
-static const int htu21d_temp_id  {0xF3};
-static const int htu21d_hum_id   {0xF5};
-static const int htu21d_delay    {100};
+static const int HTU21D_I2C_ADDR {0x40};
+static const int HTU21D_TEMP_ID  {0xF3};
+static const int HTU21D_HUM_ID   {0xF5};
+static const int HTU21D_DELAY    {100};
 
-static const int ads1115_base_addr {100};
-static const int ads1115_i2c_addr  {0x48};
+static const int ADS1115_BASE_ADDR {100};
+static const int ADS1115_I2C_ADDR  {0x48};
 
 static const int refreshInterval {1000};
 
@@ -45,14 +45,14 @@ class DataSource::Private
     {
         setenv("WIRINGPI_GPIOMEM", "1", 1);
         wiringPiSetup();
-        fd = wiringPiI2CSetup(htu21d_i2c_addr);
+        fd = wiringPiI2CSetup(HTU21D_I2C_ADDR);
         if ( 0 > fd )
         {
             fprintf (stderr, "Unable to open I2C device: %s\n", strerror (errno));
             exit (-1);
         }
 
-        ads1115Setup(ads1115_base_addr, ads1115_i2c_addr);
+        ads1115Setup(ADS1115_BASE_ADDR, ADS1115_I2C_ADDR);
 
         QTimer *timer = new QTimer;
         timer->setInterval(refreshInterval);
@@ -73,8 +73,8 @@ class DataSource::Private
         float rawValueFloat;
         float newValue;
 
-        wiringPiI2CWrite(fd, htu21d_temp_id);
-        delay(htu21d_delay);
+        wiringPiI2CWrite(fd, HTU21D_TEMP_ID);
+        delay(HTU21D_DELAY);
         read(fd, buf, 3);
         rawValue = (buf [0] << 8 | buf [1]) & 0xFFFC;
         // Convert sensor reading into temperature.
@@ -88,8 +88,8 @@ class DataSource::Private
             emit parent->valueChanged(DataSource::Temperature, temperature);
         }
 
-        wiringPiI2CWrite(fd, htu21d_hum_id);
-        delay(htu21d_delay);
+        wiringPiI2CWrite(fd, HTU21D_HUM_ID);
+        delay(HTU21D_DELAY);
         read(fd, buf, 3);
         rawValue = (buf [0] << 8 | buf [1]) & 0xFFFC;
         // Convert sensor reading into humidity.
@@ -103,7 +103,7 @@ class DataSource::Private
             emit parent->valueChanged(DataSource::Humidity, humidity);
         }
 
-        rawValue = analogRead(ads1115_base_addr + 1);
+        rawValue = analogRead(ADS1115_BASE_ADDR + 1);
         rawValueFloat = rawValue * 4.096 / 32768.0;
         newValue = rawValueFloat * 500;
 
