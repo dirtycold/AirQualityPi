@@ -83,7 +83,7 @@ class DataRefiner::Private
             if (std::isnan(*valuePtr))
             {
                 *valuePtr = newValue;
-                emit parent->valueChanged(type, *valuePtr);
+                // emit parent->valueChanged(type, *valuePtr);
             }
             else
             {
