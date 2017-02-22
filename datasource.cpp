@@ -18,7 +18,7 @@ static const int HTU21D_DELAY    {100};
 static const int ADS1115_BASE_ADDR {100};
 static const int ADS1115_I2C_ADDR  {0x48};
 
-static const int refreshInterval {1000};
+static const int refreshInterval {500};
 
 class DataSource::Private
 {
