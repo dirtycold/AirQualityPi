@@ -75,7 +75,12 @@ class DataRefiner::Private
                 return;
             }
 
-            if (std::isnan(*valuePtr) && !std::isnan(newValue))
+            if (!std::isnormal(newValue))
+            {
+                return;
+            }
+
+            if (std::isnan(*valuePtr))
             {
                 *valuePtr = newValue;
                 emit parent->valueChanged(type, *valuePtr);
