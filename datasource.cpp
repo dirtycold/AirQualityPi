@@ -54,7 +54,7 @@ class DataSource::Private
 
         ads1115Setup(ADS1115_BASE_ADDR, ADS1115_I2C_ADDR);
 
-        QTimer *timer = new QTimer;
+        QTimer *timer = new QTimer (parent);
         timer->setInterval(refreshInterval);
         timer->setSingleShot(false);
 
