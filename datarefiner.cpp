@@ -4,6 +4,13 @@
 #include <QFile>
 #include <QDateTime>
 #include <QTextStream>
+#include <QContiguousCache>
+#include <QTimer>
+
+#include <QDebug>
+
+static const int cacheSize {10};
+static const int refreshInterval {5000};
 
 class DataRefiner::Private
 {
@@ -18,9 +25,39 @@ class DataRefiner::Private
     float humidity {NAN};
     float airQuality {NAN};
 
-    Private (DataRefiner *parent) : parent (parent) {}
+    typedef QContiguousCache<float> ValueCache;
+    ValueCache temperatureCache;
+    ValueCache humidityCache;
+    ValueCache airQualityCache;
 
-    void refresh ()
+    Private (DataRefiner *parent) : parent (parent)
+    {
+        temperatureCache.setCapacity(cacheSize);
+        humidityCache.setCapacity(cacheSize);
+        airQualityCache.setCapacity(cacheSize);
+
+        QTimer *timer = new QTimer (parent);
+        timer->setSingleShot(false);
+        timer->setInterval(refreshInterval);
+
+        parent->connect(timer, &QTimer::timeout, [this] () { refreshValue();});
+        timer->start();
+
+    }
+
+    void processUpdate ()
+    {
+        if (source == nullptr)
+        {
+            return;
+        }
+
+        temperatureCache.append(source->temperature());
+        humidityCache.append(source->humidity());
+        airQualityCache.append(source->airQuality());
+    }
+
+    void refreshValue ()
     {
         if (source == nullptr)
         {
@@ -69,11 +106,22 @@ class DataRefiner::Private
             }
         };
 
-        setValue (&temperature, DataSource::Temperature, source->temperature());
-        setValue (&humidity, DataSource::Humidity, source->humidity());
-        setValue (&airQuality, DataSource::AirQuality, source->airQuality());
-
+        auto cacheAverage = [] (const ValueCache &cache)
         {
+            // cache.normalizeIndexes();
+            int count = cache.count();
+            float sum {0};
+            for (int i = cache.firstIndex(); i < cache.lastIndex(); ++i)
+            {
+                sum += cache.at(i);
+            }
+            sum /= count;
+            return sum;
+        };
+
+        setValue (&temperature, DataSource::Temperature, cacheAverage (temperatureCache));
+        setValue (&humidity, DataSource::Humidity, cacheAverage (humidityCache));
+        setValue (&airQuality, DataSource::AirQuality, cacheAverage (airQualityCache));
     }
 };
 
@@ -91,7 +139,7 @@ void DataRefiner::setSource(DataSource *source)
     }
 
     p->source = source;
-    p->connection = connect (p->source, &DataSource::valueUpdated, [this] () { p->refresh();});
+    p->connection = connect (p->source, &DataSource::valueUpdated, [this] () { p->processUpdate();});
 }
 
 void DataRefiner::removeSource()
