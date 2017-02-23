@@ -117,7 +117,7 @@ class DataRefiner::Private
             QFile file ("airQualityPi.log");
             file.open(QIODevice::WriteOnly | QIODevice::Append);
             QTextStream s (&file);
-            s << QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss.zzz")
+            s << QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss")
               << " "
               << QString::number(temperature)
               << " "
