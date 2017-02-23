@@ -92,21 +92,6 @@ class DataRefiner::Private
                 {
                     *valuePtr = updatedValue;
                     emit parent->valueChanged(type, *valuePtr);
-
-                    {
-                        QFile file ("airQualityPi.log");
-                        file.open(QIODevice::WriteOnly | QIODevice::Append);
-                        QTextStream s (&file);
-                        s << QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss.zzz")
-                          << " "
-                          << QString::number(temperature)
-                          << " "
-                          << QString::number(humidity)
-                          << " "
-                          << QString::number(airQuality)
-                          << endl;
-                        file.close();
-                    }
                 }
             }
         };
@@ -127,6 +112,21 @@ class DataRefiner::Private
         setValue (&temperature, DataSource::Temperature, cacheAverage (temperatureCache));
         setValue (&humidity, DataSource::Humidity, cacheAverage (humidityCache));
         setValue (&airQuality, DataSource::AirQuality, cacheAverage (airQualityCache));
+
+        {
+            QFile file ("airQualityPi.log");
+            file.open(QIODevice::WriteOnly | QIODevice::Append);
+            QTextStream s (&file);
+            s << QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss.zzz")
+              << " "
+              << QString::number(temperature)
+              << " "
+              << QString::number(humidity)
+              << " "
+              << QString::number(airQuality)
+              << endl;
+            file.close();
+        }
     }
 };
 
